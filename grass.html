@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="jquery-3.6.0.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap" rel="stylesheet">
+
+  <title>くさとり</title>
+  <style>
+    body {
+      font-family: 'Zen Maru Gothic', sans-serif;
+    }
+  </style>
+</head>
+
+
+<body>
+  <div id="loading">
+    <video src="./mp3/open.mp4" autoplay muted playsinline></video>
+  </div>
+  <div class="main">
+    <div class="top">
+      <button id="btn1">強い草</button>
+      <button id="btn2">すぐ抜ける草</button>
+      <button id="btn3">たんぽぽ</button>
+      <button id="btnClear">クリア</button>
+      <button id="btnSave">保存</button>
+
+    </div>
+    <div id="container"></div>
+  </div>
+
+
+
+
+
+  <script>
+
+    $(function () {
+      const loading = $("#loading video");
+      const main = $(".main");
+
+      loading.on("ended", function () {
+        // 動画をフェードアウトして、メインページをフェードインする
+        loading.fadeOut(1000, function () {
+          main.fadeIn(1000);
+        });
+      },);
+    });
+
+
+    $(function () {
+      const container = $("#container");
+
+      const imageArray = [
+        "img/normal01.png",
+        "img/normal02.png",
+        "img/dandelion.png"
+      ];
+
+      let selectedImage = null;
+
+      $("#btn1").data("image", imageArray[0]).click(function () {
+        selectedImage = $(this).data("image");
+        $(".selected").removeClass("selected");
+        $(this).addClass("selected");
+      });
+
+      $("#btn2").data("image", imageArray[1]).click(function () {
+        selectedImage = $(this).data("image");
+        $(".selected").removeClass("selected");
+        $(this).addClass("selected");
+      });
+
+      $("#btn3").data("image", imageArray[2]).click(function () {
+        selectedImage = $(this).data("image");
+        $(".selected").removeClass("selected");
+        $(this).addClass("selected");
+      });
+
+      $("#btnClear").on("click", function () {
+        selectedImage = null;
+        $(".cell").css("background-image", "");
+        $(".cell").data("selectedImage", null);
+      });
+
+      $("#btnSave").on("click", function () {
+        const cellData = $(".cell").map(function () {
+          return $(this).data("selectedImage");
+        }).get();
+        localStorage.setItem("cellData", JSON.stringify(cellData));
+        alert("保存しました");
+      });
+
+      for (let i = 0; i < 25; i++) {
+        for (let j = 0; j < 39; j++) {
+          container.append($("<div>").addClass('cell').data("selectedImage", null));
+        }
+      }
+
+      const savedData = JSON.parse(localStorage.getItem("cellData"));
+
+      container.on("click", ".cell", function () {
+        // alert("ok");
+        const cell = $(this);
+        if (cell.data("selectedImage") === selectedImage) {
+          cell.css("background-image", "");
+          cell.data("selectedImage", null);
+        } else {
+          cell.css("background-image", "url('" + selectedImage + "')");
+          cell.data("selectedImage", selectedImage);
+        }
+
+
+      });
+    });
+
+
+
+
+
+  </script>
+</body>
+
+</html>

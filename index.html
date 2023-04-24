@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="jquery-2.1.3.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
+
+    <title>じゃんけん</title>
+    <style>
+        body {
+            font-family: "Nico Moji";
+            background-color: #fa97b6;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1">
+        <div class="title">
+            <h1>クリックしてね</h1>
+        </div>
+        <div class="hand">
+            <img src="./img/janken_choki.png" alt="" id="cho_btn">
+            <img src="./img/janken_gu.png" alt="" id="gu_btn">
+            <img src="./img/janken_pa.png" alt="" id="pa_btn" class="neko">
+        </div>
+    </div>
+    <div class="box2">
+
+        <div class="pc">「あいて」は<span id="pc_hands">？？？</span></div>
+        <div id="judgment">「けっか」は？</div>
+    </div>
+    <div class="style">
+        <img src="./img/normal01.png" alt="">
+        <img src="./img/normal01.png" alt="">
+        <img src="./img/normal01.png" alt="">
+        <img src="./img/normal01.png" alt="">
+        <img src="./img/normal01.png" alt="">
+        <img src="./img/normal01.png" alt="">
+        <img src="./img/normal01.png" alt="">
+        <img src="./img/normal01.png" alt="">
+        <img src="./img/normal01.png" alt="">
+        <a href="grass.html"><img src="./img/normal01.png" alt=""></a>
+    </div>
+
+
+    <script>
+        $("#gu_btn").on("click", function () {
+            const n = Math.ceil(Math.random() * 5);
+            if (n == 1) {
+                $("#pc_hands").html('<img src="./img/janken_pa.png">');
+                $("#judgment").html("あなたの「まけ」！");
+            }
+            if (n == 2) {
+                $("#pc_hands").html('<img src="./img/janken_gu.png">');
+                $("#judgment").html("あいこ！");
+            }
+            if (n == 3) {
+                $("#pc_hands").html('<img src="./img/janken_choki.png">');
+                $("#judgment").html("あなたの「かち」！");
+            }
+        });
+
+        $(document).ready(function () {
+            $("#pa_btn").on("click", function () {
+                const n = Math.ceil(Math.random() * 5);
+                let audio;
+                if (n == 1) {
+                    $("#pc_hands").html('<img src="./img/janken_pa.png">');
+                    $("#judgment").html("あいこ！");
+                    audio = new Audio("./mp3/catnormal.mp3");
+
+                }
+                if (n == 2) {
+                    $("#pc_hands").html('<img src="./img/janken_gu.png">');
+                    $("#judgment").html("あなたの「かち」！");
+                    audio = new Audio("./mp3/catgood.mp3");
+                }
+                if (n == 3) {
+                    $("#pc_hands").html('<img src="./img/janken_choki.png">');
+                    $("#judgment").html("あなたの「まけ」！");
+                    audio = new Audio("./mp3/catbad.mp3");
+                }
+                audio.play();
+            });
+        });
+
+        $("#cho_btn").on("click", function () {
+            const n = Math.ceil(Math.random() * 5);
+            if (n == 1) {
+                $("#pc_hands").html('<img src="./img/janken_pa.png">');
+                $("#judgment").html("あなたの「かち」！");
+            }
+            if (n == 2) {
+                $("#pc_hands").html('<img src="./img/janken_gu.png">');
+                $("#judgment").html("あなたの「まけ」！");
+            }
+            if (n == 3) {
+                $("#pc_hands").html('<img src="./img/janken_choki.png">');
+                $("#judgment").html("あいこ！");
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>
