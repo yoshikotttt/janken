@@ -104,8 +104,19 @@
         }
       }
 
-      const savedData = JSON.parse(localStorage.getItem("cellData"));
-
+      $(document).ready(function () {
+        // 保存されたデータがあれば読み込んで画面に反映させる
+        const savedData = JSON.parse(localStorage.getItem("cellData"));
+        if (savedData) {
+          $(".cell").each(function (index) {
+            const selectedImage = savedData[index];
+            if (selectedImage) {
+              $(this).css("background-image", "url('" + selectedImage + "')");
+              $(this).data("selectedImage", selectedImage);
+            }
+          });
+        }
+      });
       container.on("click", ".cell", function () {
         // alert("ok");
         const cell = $(this);
